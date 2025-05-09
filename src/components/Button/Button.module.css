@@ -1,0 +1,22 @@
+.headerButton {
+  height: 100%;
+  max-width: calc(var(--index) * 15);
+  padding: 0px calc(var(--index) * 1);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: Roboto;
+  font-size: calc(var(--index) * 0.7);
+  font-weight: 400;
+  text-align: center;
+  border: none;
+  background: inherit;
+}
+
+.headerButton:hover {
+  background: rgb(30, 136, 229);
+  color: rgb(255, 255, 255);
+}
+
+.active {
+  background: rgb(30, 136, 229);
+  color: rgb(255, 255, 255);
+}

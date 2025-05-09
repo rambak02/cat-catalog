@@ -1,0 +1,22 @@
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--index)* 0.39);
+  margin-bottom: 32px;
+}
+.paginationItem {
+  width: calc(var(--index)* 1.65);
+  height: calc(var(--index)* 1.65);
+  font-size: calc(var(--index)* 0.73);
+  border: 1px solid rgb(223, 227, 232);
+  border-radius: calc(var(--index)* 0.207);
+  background: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active {
+  border: 1px solid rgb(33, 150, 243);
+  color: rgb(33, 150, 243);
+}

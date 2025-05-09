@@ -1,0 +1,12 @@
+.container {
+  height: calc(var(--index) * 49.53);
+}
+
+.catList {
+  padding: calc(var(--index) * 2.1) calc(var(--index) * 2.8);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-row-gap: calc(var(--index) * 2.59);
+  grid-column-gap: calc(var(--index) * 1.3);
+}

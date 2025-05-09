@@ -1,0 +1,26 @@
+.loaderContainer {
+  height: calc(var(--index) * 49.53);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: calc(var(--index) * 5.69);
+  height: calc(var(--index) * 5.69);
+  border: calc(var(--index) * 0.777) solid #2196f3;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
