@@ -1,17 +1,14 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { getCats } from "../../api/cat";
 import { useState } from "react";
 import { CatItem } from "../CatItem/CatItem";
 import styles from "./CatList.module.css";
 import { Loader } from "../Loader/Loader";
-import { Pagination } from "../Pagination/Pagination";
 
 export function CatList({ page, pageNumber }) {
-  console.log("render");
   const [cats, setCats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favoriteCats, setFavoriteCats] = useState([]);
-
 
   const handleAddFavorite = (cat) => {
     if (favoriteCats.some((favCat) => favCat.id === cat.id)) {
@@ -34,13 +31,38 @@ export function CatList({ page, pageNumber }) {
     );
   };
 
+  function memo(fn) {
+    const cache = {};
+    return (...args) => {
+      let key = args.toString();
+      if (key in cache) {
+        return cache[key];
+      } else {
+        const result = fn(...args);
+        cache[key] = result;
+        setTimeout(() => {
+          delete cache[key];
+        }, 180000);
+        return result;
+      }
+    };
+  }
+
+  const fetchCats = useCallback(
+    memo(async (pageNum) => {
+      const data = await getCats(pageNum);
+      return data;
+    }),
+    []
+  );
+
   useEffect(() => {
     if (page === "ALLCATS") {
       setCats([]);
       setLoading(true);
-      const fetchCats = async () => {
+      const loadCats = async () => {
         try {
-          const data = await getCats(pageNumber);
+          const data = await fetchCats(pageNumber);
           await checkAllImagesLoaded(data);
           setCats(data);
           setLoading(false);
@@ -48,7 +70,7 @@ export function CatList({ page, pageNumber }) {
           console.error(error);
         }
       };
-      fetchCats();
+      loadCats();
     } else {
       setCats(favoriteCats);
     }
@@ -56,7 +78,7 @@ export function CatList({ page, pageNumber }) {
 
   if (loading) return <Loader />;
   return (
-    <div className= {styles.container}>
+    <div className={styles.container}>
       <div className={styles["catList"]}>
         {cats.map((cat) => (
           <CatItem
