@@ -1,6 +1,15 @@
+import { TCat } from "../../types/model";
 import styles from "./CatItem.module.css";
 
-export function CatItem({ cat, onFavoriteClick, isFavorite }) {
+
+type TCatItemProps = {
+cat: TCat
+onFavoriteClick: () => void,
+isFavorite: boolean
+
+}
+
+export function CatItem({ cat, onFavoriteClick, isFavorite }: TCatItemProps) {
   return (
     <>
       <div className={styles["imageContainer"]}>
@@ -14,7 +23,6 @@ export function CatItem({ cat, onFavoriteClick, isFavorite }) {
           alt="лайк"
           className={styles["favoriteIcon"]}
           onClick={onFavoriteClick}
-          value={cat.url}
         />
       </div>
     </>

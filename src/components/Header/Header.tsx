@@ -1,7 +1,10 @@
+import { TPageInfo } from "../../types/model";
 import { Button } from "../Button/Button";
 import styles from "./Header.module.css";
 
-export function Header({ page, setPage }) {
+type THeaderProps = Omit<TPageInfo, "pageNumber" | "setPageNumber">
+
+export function Header({ page, setPage }: THeaderProps) {
   return (
     <>
       <div className={styles["header"]}>

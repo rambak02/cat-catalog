@@ -4,25 +4,30 @@ import { useState } from "react";
 import { CatItem } from "../CatItem/CatItem";
 import styles from "./CatList.module.css";
 import { Loader } from "../Loader/Loader";
+import { TCat, TPageInfo } from "../../types/model";
 
-export function CatList({ page, pageNumber }) {
-  const [cats, setCats] = useState([]);
+type TCatListProps = Omit<TPageInfo, "setPage" | "setPageNumber">;
+
+export function CatList({ page, pageNumber }: TCatListProps) {
+  const [cats, setCats] = useState<TCat[]>([]);
   const [loading, setLoading] = useState(true);
-  const [favoriteCats, setFavoriteCats] = useState([]);
+  const [favoriteCats, setFavoriteCats] = useState<TCat[]>([]);
 
-  const handleAddFavorite = (cat) => {
-    if (favoriteCats.some((favCat) => favCat.id === cat.id)) {
-      const newFavCats = favoriteCats.filter((favCat) => favCat.id !== cat.id);
+  const handleAddFavorite = (cat: TCat) => {
+    if (favoriteCats.some((favCat: TCat) => favCat.id === cat.id)) {
+      const newFavCats = favoriteCats.filter(
+        (favCat: TCat) => favCat.id !== cat.id
+      );
       setFavoriteCats([...newFavCats]);
     } else {
       setFavoriteCats([...favoriteCats, cat]);
     }
   };
 
-  const checkAllImagesLoaded = (imageObjects) => {
+  const checkAllImagesLoaded = (imageObjects: TCat[]): Promise<void[]> => {
     return Promise.all(
       imageObjects.map((image) => {
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
           const img = new Image();
           img.src = image.url;
           img.onload = () => resolve();
@@ -31,21 +36,21 @@ export function CatList({ page, pageNumber }) {
     );
   };
 
-  function memo(fn) {
-    const cache = {};
-    return (...args) => {
-      let key = args.toString();
+  function memo<T extends (...args: any[]) => any>(fn: T): T {
+    const cache: Record<string, ReturnType<T>> = {};
+    return ((...args: Parameters<T>) => {
+      let key = JSON.stringify(args);
       if (key in cache) {
         return cache[key];
-      } else {
-        const result = fn(...args);
-        cache[key] = result;
-        setTimeout(() => {
-          delete cache[key];
-        }, 180000);
-        return result;
       }
-    };
+      const result = fn(...args);
+      cache[key] = result;
+      console.log(cache);
+      setTimeout(() => {
+        delete cache[key];
+      }, 180000);
+      return result;
+    }) as T;
   }
 
   const fetchCats = useCallback(

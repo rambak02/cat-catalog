@@ -4,16 +4,17 @@ import { CatList } from "./components/CatList/CatList";
 import { Header } from "./components/Header/Header";
 import { Pagination } from "./components/Pagination/Pagination";
 
+
+
 function App() {
-  const [page, setPage] = useState("ALLCATS");
-  const [pageNumber, setPageNumber] = useState(0);
+  const [page, setPage] = useState<string>("ALLCATS");
+  const [pageNumber, setPageNumber] = useState<number>(0);
   return (
     <>
       <Header page = {page} setPage={setPage} />
       <CatList
         page={page}
         pageNumber={pageNumber}
-        setPageNumber={setPageNumber}
       />
       <Pagination setPageNumber={setPageNumber} pageNumber={pageNumber} />
     </>

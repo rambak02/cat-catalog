@@ -1,6 +1,13 @@
 import styles from "./Button.module.css";
 
-export function Button({ text, onClick, value, page }) {
+type TButtonProps = {
+text : string,
+onClick: () => void,
+value: string,
+page: string
+}
+
+export function Button({ text, onClick, value, page }: TButtonProps) {
   return (
     <>
       <button

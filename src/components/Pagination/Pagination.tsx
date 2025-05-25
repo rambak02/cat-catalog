@@ -1,6 +1,9 @@
+import { TPageInfo } from "../../types/model";
 import styles from "./Pagination.module.css";
 
-export function Pagination({ setPageNumber, pageNumber }) {
+type TPaginationProps = Omit<TPageInfo, "page" | "setPage">
+
+export function Pagination({ setPageNumber, pageNumber }: TPaginationProps) {
   const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
